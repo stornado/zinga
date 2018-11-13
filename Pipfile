@@ -1,9 +1,25 @@
 [[source]]
-url = "https://pypi.doubanio.com/simple"
+url = "http://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = false
+name = "aliyun"
+
+[[source]]
+url = "http://pypi.doubanio.com/simple/"
+verify_ssl = false
+name = "douban"
+
+[[source]]
+url = "https://mirrors.ustc.edu.cn/pypi/web/simple/"
 verify_ssl = true
-name = "pypi"
+name = "ustc"
+
+[[source]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+verify_ssl = true
+name = "tsinghua"
 
 [dev-packages]
+pylint = "*"
 
 [packages]
 aiohttp = "==3.4.4"
