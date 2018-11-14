@@ -56,7 +56,7 @@
                 "sha256:f1839db4c2b08a9c8f9788112644f8a8557e8e0ecc77b07091afabb941dc55d0",
                 "sha256:f3df52362be39908f9c028a65490fae0475e4898b43a03d8aa29d1e765b45e07"
             ],
-            "index": "pypi",
+            "index": "aliyun",
             "version": "==3.4.4"
         },
         "async-timeout": {
@@ -85,7 +85,7 @@
                 "sha256:acdcc1f61fdb0a0c82a1d3bf1879a414e7732ea894a7632af7f6d66ec7ab5bb3",
                 "sha256:efbcad7ebb47daafbcead109b38a5bd519a3c3cd92c6ed0f691ff97fcdd16b45"
             ],
-            "index": "pypi",
+            "index": "aliyun",
             "version": "==2.1.2"
         },
         "idna": {
@@ -100,7 +100,7 @@
                 "sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd",
                 "sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"
             ],
-            "index": "pypi",
+            "index": "aliyun",
             "version": "==2.10"
         },
         "markupsafe": {
@@ -254,7 +254,7 @@
                 "sha256:1d6d3622c94b4887115fe5204982eee66fdd8a951cf98635ee5caee6ec98c3ec",
                 "sha256:31142f764d2a7cd41df5196f9933b12b7ee55e73ef12204b648ad7e556c119fb"
             ],
-            "index": "pypi",
+            "index": "aliyun",
             "version": "==2.1.1"
         },
         "six": {

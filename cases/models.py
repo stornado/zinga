@@ -25,11 +25,20 @@ class Product(models.Model):
     """产品"""
     name = models.CharField(verbose_name=_('Name'), max_length=50)
     description = models.TextField(verbose_name=_('Description'))
+    business = models.ForeignKey(
+        to=Business, on_delete=models.PROTECT, verbose_name=_('Business'))
+    manager = models.ForeignKey(to=get_user_model(), on_delete=models.PROTECT, 
+                                related_name='products', verbose_name=_('Manager'))
+    participants = models.ManyToManyField(to=get_user_model(), verbose_name=_('Participants'))
     active = models.BooleanField(verbose_name=_('Status'), default=True)
+    stage = models.CharField(verbose_name=_('Stage'), max_length=25)
     start_time = models.DateTimeField(verbose_name=_('Start Time'))
-    end_time = models.DateTimeField(verbose_name=_('End Time'), null=True, blank=True)
-    create_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now_add=True)
-    update_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now=True)
+    end_time = models.DateTimeField(
+        verbose_name=_('End Time'), null=True, blank=True)
+    create_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now_add=True)
+    update_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now=True)
 
     class Meta:
         ordering = ('-active', '-end_time', 'name')
@@ -44,12 +53,19 @@ class Module(models.Model):
     """模块"""
     name = models.CharField(verbose_name=_('Name'), max_length=50)
     description = models.TextField(verbose_name=_('Description'))
+    product = models.ForeignKey(
+        to=Product, on_delete=models.PROTECT, verbose_name=_('Product'))
+    stage = models.CharField(verbose_name=_('Stage'), max_length=25)
     active = models.BooleanField(verbose_name=_('Status'), default=True)
     start_time = models.DateTimeField(verbose_name=_('Start Time'))
-    end_time = models.DateTimeField(verbose_name=_('End Time'), null=True, blank=True)
-    create_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now_add=True)
-    update_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now=True)
-    parent = models.ForeignKey(to='self', on_delete=models.PROTECT, verbose_name=_('Parent'), null=True, blank=True)
+    end_time = models.DateTimeField(
+        verbose_name=_('End Time'), null=True, blank=True)
+    create_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now_add=True)
+    update_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now=True)
+    parent = models.ForeignKey(to='self', on_delete=models.PROTECT, verbose_name=_(
+        'Parent'), null=True, blank=True)
 
     class Meta:
         ordering = ('-active', '-end_time', 'name')
@@ -62,7 +78,7 @@ class Module(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=25)
-    description = models.TextField(verbose_name=_('Description'))
+    description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Status'), default=True)
 
     class Meta:
@@ -75,17 +91,30 @@ class Tag(models.Model):
 
 
 class BaseCaseModel(models.Model):
+    CATEGORY_CHOICES = [
+        ('API', _('API Case')),
+        ('WEB', _('Web UI Case')),
+        ('H5', _('H5 Case')),
+        ('CLIENT', _('Client Case')),
+        ('UNDEFINED', _('undefined'))
+    ]
     title = models.CharField(verbose_name=_('Title'), max_length=50)
     description = models.TextField(verbose_name=_('Description'))
-    module = models.ForeignKey(to=Module, on_delete=models.PROTECT, verbose_name=_('Module'))
-    tags = models.ManyToManyField(to=Tag, verbose_name=_('Tags'), null=True, blank=True)
-    creator = models.ForeignKey(to=get_user_model(), on_delete=models.PROTECT, related_name='creator',
-                                verbose_name=_('Creator'))
-    modifier = models.ForeignKey(to=get_user_model(), on_delete=models.SET_NULL, related_name='modifier',
-                                 verbose_name=_('Modifier'), null=True, blank=True)
+    module = models.ForeignKey(
+        to=Module, on_delete=models.PROTECT, verbose_name=_('Module'))
+    tags = models.ManyToManyField(
+        to=Tag, verbose_name=_('Tags'), null=True, blank=True)
+    category = models.CharField(verbose_name=_('Category'), choices=CATEGORY_CHOICES, 
+                                default='API', max_length=10)
+    creator = models.ForeignKey(to=get_user_model(), on_delete=models.PROTECT, 
+                                related_name='cases', verbose_name=_('Creator'))
+    maintainers = models.ManyToManyField(
+        to=get_user_model(), verbose_name=_('Maintainers'), null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Status'), default=True)
-    create_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now_add=True)
-    update_time = models.DateTimeField(verbose_name=_('Create Time'), auto_now=True)
+    create_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now_add=True)
+    update_time = models.DateTimeField(
+        verbose_name=_('Create Time'), auto_now=True)
 
     class Meta:
         abstract = True
